@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEREMHUB // Digital Gaming Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --primary: #3b82f6; 
+            --accent: #10b981; 
+            --bg: #050505; 
+            --surface: #121212; 
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+        }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Outfit', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+
+        /* --- PREMİUM SIDEBAR --- */
+        .sidebar { 
+            width: 260px; 
+            height: 100vh; 
+            position: fixed; 
+            background: #000; 
+            border-right: 1px solid #1f1f1f; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 30px 20px;
+            z-index: 1000;
+        }
+
+        .logo { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 26px; 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+            margin-bottom: 50px; 
+            background: linear-gradient(45deg, var(--primary), var(--accent)); 
+            
+            /* Tarayıcı Uyumluluk Ayarları */
+            background-clip: text; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            color: var(--primary); /* Fallback */
+        }
+        
+        .nav-link { 
+            padding: 14px 20px; 
+            border-radius: 14px; 
+            margin-bottom: 8px; 
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            font-weight: 500; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .nav-link:hover { 
+            background: rgba(59, 130, 246, 0.1); 
+            color: var(--primary); 
+            transform: translateX(5px);
+        }
+
+        .nav-link.active { 
+            background: #1a1a1a; 
+            color: var(--primary); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- ANA İÇERİK ALANI --- */
+        .content { 
+            margin-left: 260px; 
+            flex: 1; 
+            padding: 40px; 
+            max-width: 1400px;
+        }
+
+        /* YOUTUBE STYLE HERO */
+        .hero-banner {
+            width: 100%; 
+            height: 450px; 
+            border-radius: 28px; 
+            margin-bottom: 50px;
+            background-size: cover; 
+            background-position: center; 
+            position: relative;
+            overflow: hidden; 
+            border: 1px solid #222;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .hero-overlay {
+            position: absolute; 
+            inset: 0; 
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.4) 50%, transparent);
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            padding: 50px;
+        }
+
+        .hero-title { font-size: 54px; margin: 0; font-weight: 800; line-height: 1.1; }
+
+        /* GRID SİSTEMİ */
+        .section-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding-top: 20px;
+        }
+
+        .game-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        .card { 
+            background: var(--surface); 
+            border-radius: 22px; 
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+            border: 1px solid #1f1f1f;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover { 
+            transform: translateY(-12px) scale(1.02); 
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+        
+        .card-img-wrapper { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 16/10; 
+            overflow: hidden; 
+        }
+
+        .card-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: 0.6s ease; 
+        }
+
+        .card:hover .card-img { transform: scale(1.1); filter: brightness(0.8); }
+
+        .discount-badge { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: var(--accent);
+            color: #000; 
+            font-weight: 800; 
+            padding: 6px 14px; 
+            border-radius: 10px; 
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .card-info { padding: 22px; }
+        .card-title { 
+            margin: 0; 
+            font-size: 19px; 
+            font-weight: 600;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+
+        .price-group { 
+            display: flex; 
+            align-items: baseline; 
+            gap: 12px; 
+            margin-top: 18px; 
+        }
+
+        .new-price { font-size: 26px; font-weight: 800; color: #fff; }
+        .old-price { font-size: 15px; color: #555; text-decoration: line-through; }
+
+        /* REKLAM ALANI (GELİR ODAKLI) */
+        .ad-banner { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+            padding: 50px; 
+            border-radius: 30px; 
+            margin: 80px 0; 
+            border: 1px solid #334155; 
+            text-align: center;
+            position: relative;
+        }
+
+        .ad-tag { 
+            position: absolute; 
+            top: 20px; 
+            left: 50%; 
+            transform: translateX(-50%);
+            color: #475569; 
+            font-size: 11px; 
+            letter-spacing: 3px; 
+            text-transform: uppercase;
+        }
+
+        /* MOBİL UYUMLULUK */
+        @media (max-width: 1024px) {
+            .sidebar { width: 80px; padding: 20px 10px; }
+            .logo, .nav-link span:last-child { display: none; }
+            .content { margin-left: 80px; padding: 20px; }
+            .hero-title { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">KEREMHUB</div>
+    <a href="/" class="nav-link active"><span>🏠</span> <span>Keşfet</span></a>
+    <a href="#" class="nav-link"><span>🔥</span> <span>Trendler</span></a>
+    <a href="#" class="nav-link"><span>🏷️</span> <span>İndirimler</span></a>
+    <a href="#" class="nav-link"><span>🎮</span> <span>Kategoriler</span></a>
+    
+    <div style="margin-top: auto; padding-bottom: 20px;">
+        <a href="/hakkimizda" class="nav-link"><span>ℹ️</span> <span>Hakkımızda</span></a>
+        <a href="/gizlilik" class="nav-link"><span>🔒</span> <span>Gizlilik</span></a>
+    </div>
+</aside>
+
+<main class="content">
+    {% if content.featured %}
+    <div class="hero-banner" style="background-image: url('{{ content.featured[0].large_capsule_image }}');">
+        <div class="hero-overlay">
+            <h1 class="hero-title">{{ content.featured[0].name }}</h1>
+            <p style="color: var(--text-dim); font-size: 18px; max-width: 600px; margin: 15px 0 30px;">
+                Dijital evrenin en çok konuşulan yapımı şimdi en iyi fiyatla KeremHub'da.
+            </p>
+            <a href="https://store.steampowered.com/app/{{ content.featured[0].id }}" target="_blank" 
+               style="background: var(--primary); color: white; padding: 18px 40px; border-radius: 16px; text-decoration: none; font-weight: 800; width: fit-content; transition: 0.3s; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);">
+               HEMEN KEŞFET
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="section-header">
+        <h2 style="font-size: 32px; font-weight: 800; letter-spacing: -1px;">Sıcak Fırsatlar</h2>
+        <span style="color: var(--primary); font-weight: 600; cursor: pointer;">Hepsini Gör</span>
+    </div>
+
+    <div class="game-grid">
+        {% for oyun in content.specials %}
+        <a href="https://store.steampowered.com/app/{{ oyun.id }}" target="_blank" class="card">
+            <div class="card-img-wrapper">
+                <img src="{{ oyun.large_capsule_image }}" class="card-img" alt="{{ oyun.name }}">
+                <div class="discount-badge">-%{{ oyun.discount_percent }}</div>
+            </div>
+            <div class="card-info">
+                <h3 class="card-title">{{ oyun.name }}</h3>
+                <div class="price-group">
+                    <span class="new-price">${{ (oyun.final_price/100)|round(2) }}</span>
+                    <span class="old-price">${{ (oyun.original_price/100)|round(2) }}</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="ad-banner">
+        <span class="ad-tag">Sponsorlu İş Ortaklığı</span>
+        <h2 style="font-size: 28px; margin-bottom: 10px;">Ekipmanını Yenileme Vakti!</h2>
+        <p style="color: var(--text-dim); margin-bottom: 25px;">Profesyonel oyuncu koltukları ve mouse'larda KeremHub takipçilerine özel indirimler.</p>
+        <div style="font-style: italic; color: var(--primary); font-size: 14px;">(Reklam Kodu Onay Bekliyor)</div>
+    </div>
+
+</main>
+
+</body>
+</html>
